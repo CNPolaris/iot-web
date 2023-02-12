@@ -7,8 +7,8 @@
           下发命令
         </el-button>
       </el-col>
-      <el-col :span="8">
-        <el-button>
+      <el-col :span="8" style="text-align: right">
+        <el-button @click="handleGetCommandList">
           <i class="el-icon-just-shuaxin" />
           刷新
         </el-button>
@@ -35,7 +35,7 @@ export default {
   setup() {
     const route = useRoute()
     const tableData = ref<any[]>([])
-    const gatewayId = ref(route.query.id)
+    const gatewayId = ref(route.query.gatewayId)
     const commandForm: IPushCommandData = reactive({
       name: "testPush",
       order_json: "command 1",
@@ -46,9 +46,13 @@ export default {
         console.log("回复", res.data)
       })
     }
+    const handleGetCommandList = () => {
+      console.log("获取下发命令历史")
+    }
     return {
       tableData,
-      handlePushCommand
+      handlePushCommand,
+      handleGetCommandList
     }
   }
 }

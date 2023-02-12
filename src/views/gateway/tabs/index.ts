@@ -1,3 +1,5 @@
 export { default as OverviewTab } from "./overview.vue"
 export { default as CommandTab } from "./command.vue"
 export { default as ConnectTab } from "./connect.vue"
+export { default as MessageTab } from "./message.vue"
+export { default as TaskTab } from "./task.vue"

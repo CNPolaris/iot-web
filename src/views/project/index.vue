@@ -20,7 +20,7 @@
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             <!-- {{email}} -->
-            <i class="el-icon-caret-bottom"></i>
+            <i class="el-icon-caret-bottom" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -38,7 +38,7 @@
 
   <div>
     <el-row>
-      <el-col :span="1"></el-col>
+      <el-col :span="1" />
       <el-col :span="20">
         <div class="p-header" style="margin-top: 10px">
           <h3 class="p-title">我创建的项目</h3>
@@ -59,6 +59,11 @@
                     <!-- <i class="grid-con-icon"></i> -->
                     <div class="grid-cont-right">
                       <div>{{ item.name }}</div>
+                      <div class="ptext">
+                        网关：0
+                        <span class="spilt">|</span>
+                        成员：{{ item.userCount }}
+                      </div>
                     </div>
                   </div>
                 </el-card>
@@ -67,7 +72,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="1"></el-col>
+      <el-col :span="1" />
     </el-row>
   </div>
 </template>
@@ -79,6 +84,7 @@ import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/co
 import { setNowProject, setNowProjectKey } from "@/utils/cache/localStorage"
 import { getMyProjectApi } from "@/api/project"
 import { type IGetProjectDataApi } from "@/api/project"
+import { formatDate } from "@/utils/date"
 
 export default {
   name: "ProjectIndex",
@@ -111,6 +117,7 @@ export default {
     const getMyProjects = () => {
       getMyProjectApi(getProjectForm).then((re) => {
         tableData.value = re.data
+        console.log(formatDate(re.data[0].createTime))
       })
     }
 
@@ -278,5 +285,15 @@ export default {
   position: absolute;
   right: 0;
   top: 0;
+}
+.ptext {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #888;
+}
+.split {
+  margin: 0 10px;
+  color: #ccc;
 }
 </style>

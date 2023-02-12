@@ -49,7 +49,7 @@ export default {
     /**获取当前项目下所有网关设备 */
     getAllGatewayList()
     const handleChoiceGateway = (id: string) => {
-      router.push({ path: "/gateway/detail", query: { id: id } })
+      router.push({ path: "/gateway/detail", query: { gatewayId: id } })
     }
     return {
       tableData,

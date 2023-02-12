@@ -44,7 +44,7 @@ export default {
   },
   setup(props) {
     const { toClipboard } = useClipboard()
-    const {gatewayKey} = toRefs(props)
+    const { gatewayKey } = toRefs(props)
     const tcpData = reactive([
       {
         id: 0,

@@ -15,16 +15,21 @@
     </div>
     <div style="margin-top: 20px">
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-        <el-tab-pane label="概览" name="first">
+        <el-tab-pane label="概览" name="overview">
           <OverviewTab />
         </el-tab-pane>
-        <el-tab-pane label="连接" name="second">
+        <el-tab-pane label="连接" name="connect">
           <ConnectTab :gatewayKey="gatewayData.gatewayKey" />
         </el-tab-pane>
-        <el-tab-pane label="命令" name="third">
+        <el-tab-pane label="命令" name="command">
           <CommandTab />
         </el-tab-pane>
-        <el-tab-pane label="任务" name="fourth">任务</el-tab-pane>
+        <el-tab-pane label="任务" name="task">
+          <TaskTab />
+        </el-tab-pane>
+        <el-tab-pane label="消息" name="message">
+          <MessageTab />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -37,19 +42,21 @@ import { getGatewayDetailApi } from "@/api/gateway"
 import { getNowProjectKey } from "@/utils/cache/localStorage"
 import useClipboard from "vue-clipboard3"
 import { ElMessage } from "element-plus"
-import { OverviewTab, ConnectTab, CommandTab } from "./tabs"
+import { OverviewTab, ConnectTab, CommandTab, MessageTab, TaskTab } from "./tabs"
 export default {
   name: "GatewayDetail",
   components: {
     OverviewTab,
     ConnectTab,
-    CommandTab
+    CommandTab,
+    MessageTab,
+    TaskTab
   },
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const gatewayId = ref(route.query.id)
-    const activeName = ref("first")
+    const gatewayId = ref(route.query.gatewayId)
+    const activeName = ref("overview")
     const gatewayData = reactive({
       id: "",
       name: "",
