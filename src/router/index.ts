@@ -5,7 +5,7 @@ import { getToken, getRole } from "../utils/cache/cookies"
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard"
+    redirect: "/project"
   },
   {
     path: "/",
@@ -53,26 +53,39 @@ const routes = [
       title: "我的项目"
     },
     component: () => import("@/views/project/index.vue")
+  },
+  {
+    path: "/404",
+    component: () => import("@/views/error/404.vue"),
+    meta: {
+      hidden: true
+    },
+    alias: "/:pathMatch(.*)*"
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "/ErrorPage",
+    redirect: "/404",
+    meta: {
+      title: "拒绝访问"
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: routes
 })
-
-router.beforeEach((to, from, next) => {
-  // document.title = `${to.meta.title} | 元理云`;
-  document.title = `IOT控制台`
-  const role = getRole()
-  if (!role && to.path !== "/login") {
-    next("/login")
-  } else if (to.meta.permission) {
-    // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-    role === "admin" ? next() : next("/403")
-  } else {
-    next()
+export function resetRouter() {
+  try {
+    router.getRoutes().forEach((route) => {
+      const { name, meta } = route
+      if (name && meta.roles?.length) {
+        router.hasRoute(name) && router.removeRoute(name)
+      }
+    })
+  } catch (error) {
+    window.location.reload()
   }
-})
-
+}
 export default router

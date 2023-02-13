@@ -70,10 +70,10 @@ export default {
     const router = useRouter()
     const handleCommand = (command: string) => {
       if (command == "loginOut") {
+        router.push("/login")
         removeEmail()
         removeRole()
         removeToKen()
-        router.push("/login")
       } else if (command == "user") {
         router.push("/user")
       }

@@ -111,7 +111,7 @@ export default {
     const handleChoiceProject = (id: string, projectKey: string) => {
       setNowProject(id)
       setNowProjectKey(projectKey)
-      router.push("/")
+      router.push("/dashboard")
     }
 
     const getMyProjects = () => {
