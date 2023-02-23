@@ -60,7 +60,7 @@ export default {
 
     const copyProjectKey = async () => {
       try {
-        await toClipboard(getNowProjectKey())
+        await toClipboard(getNowProjectKey() as string)
         ElMessage.success("复制成功")
       } catch (e) {
         ElMessage.error("复制失败")
@@ -76,7 +76,7 @@ export default {
     }
     const copyGatewayKey = async () => {
       try {
-        await toClipboard(gatewayKey.value)
+        await toClipboard(gatewayKey.value as string)
         ElMessage.success("复制成功")
       } catch (e) {
         ElMessage.error("复制失败")

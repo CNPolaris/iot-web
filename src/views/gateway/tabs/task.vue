@@ -49,22 +49,22 @@ export default {
     })
     const tableData = ref<any[]>([])
     const handleCreateTask = () => {
-      CreateTaskApi(gatewayId.value, form).then((res: any) => {
+      CreateTaskApi(gatewayId.value as string, form).then((res: any) => {
         console.log(res.message)
       })
     }
     const handlePushTask = (taskId: string) => {
-      pushTaskApi(gatewayId.value, taskId).then((res: any) => {
+      pushTaskApi(gatewayId.value as string, taskId).then((res: any) => {
         console.log(res)
       })
     }
     const getAllTask = () => {
-      getAllTaskApi(gatewayId.value, query).then((res: any) => {
+      getAllTaskApi(gatewayId.value as string, query).then((res: any) => {
         tableData.value = res.data.list
       })
     }
     const handleFlush = () => {
-      getAllTaskApi(gatewayId.value, query).then((res: any) => {
+      getAllTaskApi(gatewayId.value as string, query).then((res: any) => {
         tableData.value = res.data.list
       })
     }

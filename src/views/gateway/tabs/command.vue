@@ -39,7 +39,7 @@ export default {
     const commandForm: IPushCommandData = reactive({
       name: "testPush",
       order_json: "command 1",
-      gateway_id: gatewayId.value
+      gateway_id: gatewayId.value as string
     })
     const handlePushCommand = () => {
       pushCommandApi(commandForm).then((res: any) => {
