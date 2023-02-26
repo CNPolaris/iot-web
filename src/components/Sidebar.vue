@@ -58,6 +58,10 @@ export default {
           {
             index: "/gateway",
             title: "网关"
+          },
+          {
+            index: "/monitor",
+            title: "监控"
           }
         ]
       }

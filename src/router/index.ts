@@ -35,6 +35,22 @@ const routes = [
           title: "网关详情"
         },
         component: () => import("@/views/gateway/detail.vue")
+      },
+      {
+        path: "/monitor",
+        name: "Monitor",
+        meta: {
+          title: "监控设备"
+        },
+        component: () => import("@/views/monitor/index.vue")
+      },
+      {
+        path: "/monitor/preview",
+        name: "MonitorPreview",
+        meta: {
+          title: "监控预览"
+        },
+        component: () => import("@/views/monitor/components/preview.vue")
       }
     ]
   },
