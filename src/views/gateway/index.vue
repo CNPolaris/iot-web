@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { ref } from "vue"
-import { getGatewayListApi } from "@/api/gateway"
+import { getGatewayListApi } from "@/api/gateway/index"
 import { getNowProject } from "@/utils/cache/localStorage"
 import { useRouter } from "vue-router"
 

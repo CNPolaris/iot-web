@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row style="margin-top: 10px">
-      <el-col :span="16"></el-col>
+      <el-col :span="16" />
       <el-col :span="8" style="text-align: right">
         <el-button @click="handleCreateTask" type="primary">创建任务</el-button>
         <el-button @click="handleFlush">刷新</el-button>

@@ -38,7 +38,7 @@
 <script lang="ts">
 import { ref, reactive } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { getGatewayDetailApi } from "@/api/gateway"
+import { getGatewayDetailApi } from "@/api/gateway/index"
 import { getNowProjectKey } from "@/utils/cache/localStorage"
 import useClipboard from "vue-clipboard3"
 import { ElMessage } from "element-plus"
