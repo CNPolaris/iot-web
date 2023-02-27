@@ -43,7 +43,7 @@
         <div class="p-header" style="margin-top: 10px">
           <h3 class="p-title">我创建的项目</h3>
           <div class="p-actions">
-            <el-button type="primary">创建项目</el-button>
+            <el-button type="primary" @click="dialogVisible = true">创建项目</el-button>
           </div>
         </div>
         <el-row :gutter="20" style="margin-top: 20px">
@@ -75,28 +75,48 @@
       <el-col :span="1" />
     </el-row>
   </div>
+  <el-dialog v-model="dialogVisible" title="创建项目">
+    <el-form :model="createProjectForm" :rules="rules">
+      <el-form-item prop="name" label="项目名称">
+        <el-input v-model="createProjectForm.name" autocomplete="off" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="handleCreateProject">Confirm</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script lang="ts">
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import avatar from "@/assets/img/img.png"
+import { ElMessage } from "element-plus"
 import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/cookies"
 import { setNowProject, setNowProjectKey } from "@/utils/cache/localStorage"
-import { getMyProjectApi } from "@/api/project"
-import { type IGetProjectDataApi } from "@/api/project"
+import { getMyProjectApi, createProjectApi } from "@/api/project/index"
+import { type IGetProjectDataApi } from "@/api/project/index"
 import { formatDate } from "@/utils/date"
-
+import { type ICreateProjectRequestData } from "@/api/project/types/project"
 export default {
   name: "ProjectIndex",
   setup() {
     const email = ref(getEmail())
     const router = useRouter()
     const tableData = ref<any[]>([])
-
+    const dialogVisible = ref(false)
     const getProjectForm: IGetProjectDataApi = reactive({
       page: 1,
       limit: 10
     })
+    const createProjectForm: ICreateProjectRequestData = reactive({
+      name: ""
+    })
+    const rules = {
+      name: [{ required: true, message: "请输入项目名称", trigger: "blur" }]
+    }
     const handleCommand = (command: string) => {
       if (command === "loginOut") {
         removeEmail()
@@ -113,7 +133,17 @@ export default {
       setNowProjectKey(projectKey)
       router.push("/dashboard")
     }
-
+    const handleCreateProject = () => {
+      createProjectApi(createProjectForm).then((res: any) => {
+        if (res.code == 200) {
+          ElMessage.success(res.message)
+          dialogVisible.value = false
+          getMyProjects()
+        } else {
+          ElMessage.error("创建项目失败")
+        }
+      })
+    }
     const getMyProjects = () => {
       getMyProjectApi(getProjectForm).then((re) => {
         tableData.value = re.data
@@ -127,6 +157,10 @@ export default {
       avatar,
       email,
       tableData,
+      dialogVisible,
+      createProjectForm,
+      rules,
+      handleCreateProject,
       handleCommand,
       handleChoiceProject
     }
@@ -295,5 +329,8 @@ export default {
 .split {
   margin: 0 10px;
   color: #ccc;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
 }
 </style>

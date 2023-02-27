@@ -6,14 +6,14 @@
         <el-form-item prop="username">
           <el-input v-model="form.email" placeholder="username">
             <template #prepend>
-              <el-button icon="el-icon-user"></el-button>
+              <el-button icon="el-icon-user" />
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input type="password" placeholder="password" v-model="form.password" @keyup.enter="submitForm()">
             <template #prepend>
-              <el-button icon="el-icon-lock"></el-button>
+              <el-button icon="el-icon-lock" />
             </template>
           </el-input>
         </el-form-item>
