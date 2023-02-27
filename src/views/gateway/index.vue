@@ -5,7 +5,7 @@
         <div class="p-header" style="margin-top: 10px">
           <h3 class="p-title">网关设备</h3>
           <div class="p-actions">
-            <el-button type="primary">创建设备</el-button>
+            <el-button type="primary" @click="dialogVisible = true">创建设备</el-button>
           </div>
         </div>
         <el-row :gutter="20" style="margin-top: 20px">
@@ -28,23 +28,55 @@
       <el-col :span="2" />
     </el-row>
   </div>
+  <el-dialog v-model="dialogVisible" title="添加网关">
+    <el-form :model="createGatewayForm" :rules="rules">
+      <el-form-item prop="name" label="网关名称">
+        <el-input v-model="createGatewayForm.name" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="handleCreateGateway">Confirm</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <script lang="ts">
-import { ref } from "vue"
-import { getGatewayListApi } from "@/api/gateway/index"
+import { ref, reactive } from "vue"
+import { getGatewayListApi, createGatewayApi } from "@/api/gateway/index"
+import { type createGatewayRequestData } from "@/api/gateway/types/gateway"
 import { getNowProject } from "@/utils/cache/localStorage"
 import { useRouter } from "vue-router"
-
+import { ElMessage } from "element-plus"
 export default {
   name: "Gateway",
   setup() {
     const tableData = ref<any[]>([])
     const router = useRouter()
+    const dialogVisible = ref(false)
+    const createGatewayForm: createGatewayRequestData = reactive({
+      name: "",
+      project_id: getNowProject() as string
+    })
+    const rules = {
+      name: [{ required: true, message: "请输入网关名称", trigger: "blur" }]
+    }
     const getAllGatewayList = () => {
       getGatewayListApi(getNowProject()).then((res) => {
         tableData.value = res.data
       })
       console.log(tableData)
+    }
+    const handleCreateGateway = () => {
+      createGatewayApi(createGatewayForm).then((res: any) => {
+        if (res.code === 200) {
+          ElMessage.success("添加网关成功")
+          dialogVisible.value = false
+        } else {
+          ElMessage.error("添加网关失败")
+        }
+      })
     }
     /**获取当前项目下所有网关设备 */
     getAllGatewayList()
@@ -52,9 +84,13 @@ export default {
       router.push({ path: "/gateway/detail", query: { gatewayId: id } })
     }
     return {
+      dialogVisible,
       tableData,
+      rules,
+      createGatewayForm,
       getAllGatewayList,
-      handleChoiceGateway
+      handleChoiceGateway,
+      handleCreateGateway
     }
   }
 }
@@ -160,5 +196,8 @@ export default {
   position: absolute;
   right: 0;
   top: 0;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
 }
 </style>
