@@ -26,8 +26,8 @@
 </template>
 <script lang="ts">
 import { ref, reactive } from "vue"
-import { type IPushCommandData } from "@/api/command"
-import { pushCommandApi } from "@/api/command"
+import { type IPushCommandData } from "@/api/gateway/types/command"
+import { pushCommandApi } from "@/api/gateway"
 import { useRoute } from "vue-router"
 
 export default {

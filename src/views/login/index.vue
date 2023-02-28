@@ -30,7 +30,7 @@ import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import { ElMessage } from "element-plus"
 import { loginApi } from "@/api/login"
-import { type ILoginData } from "@/api/login"
+import { type ILoginData } from "@/api/login/types/login"
 import { setToken, setEmail, setRole } from "@/utils/cache/cookies"
 
 export default {

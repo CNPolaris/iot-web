@@ -29,8 +29,8 @@
 <script lang="ts">
 import { useRoute } from "vue-router"
 import { reactive, ref } from "vue"
-import { type ICreateTaskData, type IGetTaskParams } from "@/api/task"
-import { CreateTaskApi, getAllTaskApi, pushTaskApi } from "@/api/task"
+import { type ICreateTaskData, type IGetTaskParams } from "@/api/gateway/types/task"
+import { CreateTaskApi, getAllTaskApi, pushTaskApi } from "@/api/gateway"
 
 export default {
   name: "TaskTab",
