@@ -64,6 +64,19 @@ export default {
             title: "监控"
           }
         ]
+      },
+      {
+        title: "管理",
+        subs: [
+          {
+            index: "/admin/project",
+            title: "项目管理"
+          },
+          {
+            index: "/admin/user",
+            title: "用户管理"
+          }
+        ]
       }
     ]
 

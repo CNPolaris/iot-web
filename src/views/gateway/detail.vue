@@ -30,6 +30,9 @@
         <el-tab-pane label="消息" name="message">
           <MessageTab />
         </el-tab-pane>
+        <el-tab-pane label="编辑" name="edit">
+          <EditTab :name="gatewayData.name" :createTime="gatewayData.createTime" :gatewayKey="gatewayData.gatewayKey" />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -42,7 +45,7 @@ import { getGatewayDetailApi } from "@/api/gateway/index"
 import { getNowProjectKey } from "@/utils/cache/localStorage"
 import useClipboard from "vue-clipboard3"
 import { ElMessage } from "element-plus"
-import { OverviewTab, ConnectTab, CommandTab, MessageTab, TaskTab } from "./tabs"
+import { OverviewTab, ConnectTab, CommandTab, MessageTab, TaskTab, EditTab } from "./tabs"
 export default {
   name: "GatewayDetail",
   components: {
@@ -50,7 +53,8 @@ export default {
     ConnectTab,
     CommandTab,
     MessageTab,
-    TaskTab
+    TaskTab,
+    EditTab
   },
   setup() {
     const route = useRoute()
@@ -61,7 +65,8 @@ export default {
       id: "",
       name: "",
       gatewayKey: "",
-      createTime: ""
+      createTime: "",
+      projectId: ""
     })
     const tcpData = reactive([
       {
@@ -88,6 +93,8 @@ export default {
     const getGatewayDetail = () => {
       getGatewayDetailApi(gatewayId.value).then((res) => {
         console.log(res.data)
+        gatewayData.id = res.data.id
+        gatewayData.projectId = res.data.projectId
         gatewayData.name = res.data.name
         gatewayData.gatewayKey = res.data.gatewayKey
         gatewayData.createTime = res.data.createTime
