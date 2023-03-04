@@ -14,4 +14,6 @@ export interface IUpdateGatewayData {
   id: string
   name: string
   gatewayKey: string
+  createTime: string
+  projectId: string
 }
