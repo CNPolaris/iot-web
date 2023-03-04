@@ -31,7 +31,11 @@
           <MessageTab />
         </el-tab-pane>
         <el-tab-pane label="编辑" name="edit">
-          <EditTab :name="gatewayData.name" :createTime="gatewayData.createTime" :gatewayKey="gatewayData.gatewayKey" />
+          <EditTab
+            :gateway-name="gatewayData.name"
+            :createTime="gatewayData.createTime"
+            :gatewayKey="gatewayData.gatewayKey"
+          />
         </el-tab-pane>
       </el-tabs>
     </div>

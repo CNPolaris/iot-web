@@ -9,3 +9,9 @@ export interface IGatewayDetailData {
   gatewayKey: string
   createTime: string
 }
+
+export interface IUpdateGatewayData {
+  id: string
+  name: string
+  gatewayKey: string
+}

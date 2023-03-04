@@ -24,9 +24,24 @@ export function getGatewayDetailApi(id: any) {
   })
 }
 
+export function deleteGatewayApi(id: any) {
+  return request({
+    url: "/iot/api/gateway/" + id,
+    method: "delete"
+  })
+}
+
 export function createGatewayApi(data: Gateway.createGatewayRequestData) {
   return request({
     url: "/iot/api/gateway",
+    method: "post",
+    data
+  })
+}
+
+export function updateGatewayDataApi(gatewayId: string, data: Gateway.IUpdateGatewayData) {
+  return request({
+    url: "/iot/api/gateway/" + gatewayId,
     method: "post",
     data
   })
