@@ -8,6 +8,10 @@ const routes = [
     redirect: "/project"
   },
   {
+    path: "/company",
+    component: () => import("@/views/company/index.vue")
+  },
+  {
     path: "/",
     name: "Home",
     component: Home,
@@ -51,6 +55,14 @@ const routes = [
           title: "监控预览"
         },
         component: () => import("@/views/monitor/components/preview.vue")
+      },
+      {
+        path: "/project/edit",
+        name: "ProjectEdit",
+        meta: {
+          title: "项目管理"
+        },
+        component: () => import("@/views/project/edit.vue")
       }
     ]
   },

@@ -20,3 +20,10 @@ export function createProjectApi(data: Project.ICreateProjectRequestData) {
     data
   })
 }
+
+export function getProjectDetailApi(projectId: String) {
+  return request({
+    url: "/iot/api/project/" + projectId,
+    method: "get"
+  })
+}

@@ -162,6 +162,10 @@ export default {
   font-size: 14px;
   font-weight: 500;
 }
+.el-page-header__title:hover {
+  color: #3f87f3;
+  text-decoration: none;
+}
 .el-page-header__content {
   font-size: 18px;
   color: #303133;

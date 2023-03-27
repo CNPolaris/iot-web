@@ -60,10 +60,11 @@
                     <div class="grid-cont-right">
                       <div>{{ item.name }}</div>
                       <div class="ptext">
-                        网关：0
+                        网关：{{ item.gatewayCount }}
                         <span class="spilt">|</span>
                         成员：{{ item.userCount }}
                       </div>
+                      <div>创建时间：{{ item.createTime }}</div>
                     </div>
                   </div>
                 </el-card>

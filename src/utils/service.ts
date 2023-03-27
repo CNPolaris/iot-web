@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios"
 import { ElMessage } from "element-plus"
 import { getToken } from "./cache/cookies"
-import { get } from "lodash-es"
+import { get } from "lodash"
 import { useUserStoreHook } from "@/stores/user"
 
 /** 创建请求实例 */

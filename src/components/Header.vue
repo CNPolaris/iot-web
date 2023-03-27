@@ -2,10 +2,15 @@
   <div class="header">
     <!-- 折叠按钮 -->
     <div class="collapse-btn" @click="collapseChage">
-      <i v-if="!sidebar.collapse" class="el-icon-s-fold"></i>
-      <i v-else class="el-icon-s-unfold"></i>
+      <i v-if="!sidebar.collapse" class="el-icon-s-fold" />
+      <i v-else class="el-icon-s-unfold" />
     </div>
     <div class="logo">元理云IOT</div>
+    <div class="project">
+      <div class="text">
+        <a href="/#/project">我的项目</a>
+      </div>
+    </div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 消息中心 -->
@@ -25,7 +30,7 @@
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             <!-- {{username}} -->
-            <i class="el-icon-caret-bottom"></i>
+            <i class="el-icon-caret-bottom" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -42,7 +47,7 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, onMounted } from "vue"
+import { onMounted } from "vue"
 import { useSidebarStore } from "@/stores/sidebar"
 import { useRouter } from "vue-router"
 import avatar from "../assets/img/img.png"
@@ -79,13 +84,18 @@ export default {
       }
     }
 
+    const hanlderMyProjects = () => {
+      router.push("/project")
+    }
+
     return {
       sidebar,
       username,
       avatar,
       message,
       collapseChage,
-      handleCommand
+      handleCommand,
+      hanlderMyProjects
     }
   }
 }
@@ -107,9 +117,32 @@ export default {
 }
 .header .logo {
   float: left;
-  width: 250px;
+  width: 160px;
   line-height: 70px;
 }
+.header .project {
+  float: left;
+  margin: 0 10px 0 20px;
+  font-size: 14px;
+  line-height: 70px;
+}
+.header .text {
+  display: inline-block;
+  margin: 0 15px 0 0;
+}
+.header a {
+  color: rgb(243, 240, 240);
+  text-decoration: none;
+}
+.header a:hover {
+  color: #6690cf;
+  text-decoration: none;
+}
+.header a:active {
+  color: #6690cf;
+  text-decoration: none;
+}
+
 .header-right {
   float: right;
   padding-right: 50px;

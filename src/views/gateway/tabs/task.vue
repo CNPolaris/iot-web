@@ -17,8 +17,11 @@
             <div class="dctext">
               {{ item.type }}
             </div>
-            <div class="itaskstat">
-              <el-button>运行任务</el-button>
+            <div class="taskCon">
+              <div class="itaskdelete"><el-button type="warning">删除任务</el-button></div>
+              <div class="itaskstat">
+                <el-button type="primary">运行任务</el-button>
+              </div>
             </div>
           </el-card>
         </div>
@@ -83,7 +86,21 @@ export default {
 .task-cards {
   margin: 30px 0 0 0;
 }
+.taskCon {
+  float: right;
+  display: inline-flex;
+  margin-bottom: 15px;
+}
 .itaskstat {
+  margin: 15px 0 0 0;
+  height: 30px;
+  font-size: 13px;
+  line-height: 30px;
+  color: #888;
+  text-align: right;
+  position: relative;
+}
+.itaskdelete {
   margin: 15px 0 0 0;
   height: 30px;
   font-size: 13px;
