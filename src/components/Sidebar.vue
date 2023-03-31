@@ -66,18 +66,9 @@ export default {
         ]
       },
       {
-        title: "管理",
+        title: "项目",
         icon: "el-icon-just-yingyongguanli",
-        subs: [
-          {
-            index: "/project/edit",
-            title: "项目管理"
-          },
-          {
-            index: "/admin/user",
-            title: "用户管理"
-          }
-        ]
+        index: "/project/edit"
       }
     ]
 

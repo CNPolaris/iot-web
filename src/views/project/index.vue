@@ -81,6 +81,9 @@
       <el-form-item prop="name" label="项目名称">
         <el-input v-model="createProjectForm.name" autocomplete="off" />
       </el-form-item>
+      <el-form-item prop="describe" label="项目描述">
+        <el-input v-model="createProjectForm.describes" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -99,7 +102,6 @@ import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/co
 import { setNowProject, setNowProjectKey } from "@/utils/cache/localStorage"
 import { getMyProjectApi, createProjectApi } from "@/api/project/index"
 import { type IGetProjectDataApi } from "@/api/project/index"
-import { formatDate } from "@/utils/date"
 import { type ICreateProjectRequestData } from "@/api/project/types/project"
 export default {
   name: "ProjectIndex",
@@ -113,10 +115,12 @@ export default {
       limit: 10
     })
     const createProjectForm: ICreateProjectRequestData = reactive({
-      name: ""
+      name: "",
+      describes: ""
     })
     const rules = {
-      name: [{ required: true, message: "请输入项目名称", trigger: "blur" }]
+      name: [{ required: true, message: "请输入项目名称", trigger: "blur" }],
+      describes: [{ required: true, message: "请输入项目描述", trigger: "blur" }]
     }
     const handleCommand = (command: string) => {
       if (command === "loginOut") {
@@ -134,21 +138,31 @@ export default {
       setNowProjectKey(projectKey)
       router.push("/dashboard")
     }
+    const validProjectForm = () => {
+      if (createProjectForm.name && createProjectForm.describe) {
+        return true
+      } else {
+        return false
+      }
+    }
     const handleCreateProject = () => {
-      createProjectApi(createProjectForm).then((res: any) => {
-        if (res.code == 200) {
-          ElMessage.success(res.message)
-          dialogVisible.value = false
-          getMyProjects()
-        } else {
-          ElMessage.error("创建项目失败")
-        }
-      })
+      if (validProjectForm()) {
+        createProjectApi(createProjectForm).then((res: any) => {
+          if (res.code == 200) {
+            ElMessage.success(res.message)
+            dialogVisible.value = false
+            getMyProjects()
+          } else {
+            ElMessage.error("创建项目失败")
+          }
+        })
+      } else {
+        ElMessage.warning("项目名和描述不能为空")
+      }
     }
     const getMyProjects = () => {
       getMyProjectApi(getProjectForm).then((re) => {
         tableData.value = re.data
-        console.log(formatDate(re.data[0].createTime))
       })
     }
 

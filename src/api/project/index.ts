@@ -27,3 +27,10 @@ export function getProjectDetailApi(projectId: String) {
     method: "get"
   })
 }
+
+export function deleteProjectApi(projectId: String) {
+  return request({
+    url: "/iot/api/project/" + projectId,
+    method: "delete"
+  })
+}
