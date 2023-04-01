@@ -285,3 +285,7 @@ a {
 .grid-con-3 .grid-num {
   color: rgb(242, 94, 67);
 }
+.pager-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
