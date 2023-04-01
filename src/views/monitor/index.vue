@@ -11,12 +11,27 @@
         <el-row :gutter="20" style="margin-top: 20px">
           <el-col :span="24">
             <el-row :gutter="30" class="mgb20">
-              <el-col :span="8" v-for="item in monitorList" :key="item.id" style="padding-top: 10px">
-                <el-card shadow="hover" :body-style="{ padding: '0px' }" @click="previewMonitor(item.id)">
+              <el-col
+                :span="8"
+                :xs="24"
+                :sm="12"
+                :md="8"
+                :lg="8"
+                :xl="8"
+                v-for="item in monitorList"
+                :key="item.id"
+                style="padding-top: 10px"
+              >
+                <el-card shadow="hover" :body-style="{ padding: '0px' }" @click="previewMonitor(item.id, item.status)">
                   <div class="grid-content grid-con-2">
                     <!-- <i class="grid-con-icon"></i> -->
                     <div class="grid-cont-right">
-                      <div>监控名称：{{ item.name }}</div>
+                      <div>
+                        监控名称：{{ item.name }}
+                        <el-tag :type="item.status == 0 ? 'success' : 'warning'" size="small" effect="light">{{
+                          item.status === 0 ? "有效" : "无效"
+                        }}</el-tag>
+                      </div>
                       <div>创建时间：{{ item.createTime }}</div>
                     </div>
                   </div>
@@ -62,13 +77,13 @@
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import { getNowProject } from "@/utils/cache/localStorage"
-import { CreateMonitorRequestData, getMonitorListRequestData } from "@/api/monitor/types/monitor"
+import { CreateMonitorRequestData, getMonitorListRequestData, MonitorItemResp } from "@/api/monitor/types/monitor"
 import { createMonitorApi, getMonitorListApi } from "@/api/monitor"
 import { ElMessage } from "element-plus"
 import { usePagination } from "@/hooks/usePagination"
 export default {
   setup() {
-    const monitorList = ref<any[]>([])
+    const monitorList = ref<MonitorItemResp[]>([])
     const router = useRouter()
     const monitorDialogVisible = ref(false)
     const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
@@ -85,8 +100,12 @@ export default {
     const rules = {
       name: [{ required: true, message: "请输入监控名称", trigger: "blur" }]
     }
-    const previewMonitor = (id: string) => {
-      router.push({ path: "/monitor/preview", query: { monitorId: id } })
+    const previewMonitor = (id: string, status: number) => {
+      if (status === 0) {
+        router.push({ path: "/monitor/preview", query: { monitorId: id } })
+      } else {
+        ElMessage.warning("该监控已被禁用!")
+      }
     }
     const handleCreateMonitor = () => {
       if (createForm.name) {

@@ -95,7 +95,7 @@ export default {
      * 获取网关详情
      */
     const getGatewayDetail = () => {
-      getGatewayDetailApi(gatewayId.value).then((res) => {
+      getGatewayDetailApi(gatewayId.value).then((res: any) => {
         console.log(res.data)
         gatewayData.id = res.data.id
         gatewayData.projectId = res.data.projectId

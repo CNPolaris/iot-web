@@ -8,22 +8,41 @@
 
 <script>
 import flvjs from "flv.js/dist/flv.min.js"
+import { getMonitorDetailApi } from "@/api/monitor"
+import { useRoute } from "vue-router"
+import { ElMessage } from "element-plus"
 export default {
   name: "Monitor",
   data() {
     return {
       flvPlayer: null,
       // url: "http://106.55.191.65:8888/flv?port:1935&app=live&stream=demo"
-      url: "http://106.55.191.65:8888/live/demo.flv"
+      url: "http://106.55.191.65:8888/live/demo.flv",
+      route: useRoute()
     }
   },
   mounted() {
-    this.videoFlvPlay()
+    // this.videoFlvPlay()
   },
   beforeUnmount() {
     this.destroyVideo()
   },
+  created() {
+    this.getMonitorUrl()
+  },
   methods: {
+    getMonitorUrl() {
+      // this.url = this.router.query.id
+      getMonitorDetailApi(this.route.query.monitorId).then((res) => {
+        if (res.code === 200) {
+          this.url = "http://106.55.191.65:8888/live/" + res.data.monitorKey + ".flv" // 后期要改的
+          this.videoFlvPlay()
+        } else {
+          ElMessage.error("监控预览失败")
+          this.router.push("/monitor")
+        }
+      })
+    },
     videoFlvPlay() {
       if (flvjs.isSupported()) {
         if (this.flvPlayer) {
@@ -42,7 +61,7 @@ export default {
             enableWorker: true, //是否多线程工作
             anableStashBuffer: false, //是否启用缓存
             stashInitialSize: 384, //缓存大小(kb) 默认384kb
-            autoCleanupSourceBuffer: true //是否自动缓存
+            autoCleanupSourceBuffer: false //是否自动缓存
           }
         )
         this.flvPlayer.attachMediaElement(document.getElementById("myVideo"))
@@ -70,8 +89,8 @@ export default {
     },
     videoPlayer() {
       if (flvjs.isSupported()) {
-        var videoElement = document.getElementById("myVideo")
-        var flvPlayer = flvjs.createPlayer({
+        const videoElement = document.getElementById("myVideo")
+        const flvPlayer = flvjs.createPlayer({
           type: "flv",
           url: "url" //你的url地址
         })

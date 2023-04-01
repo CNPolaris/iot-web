@@ -16,12 +16,15 @@ export type getMonitorListRequestData = {
   projectId: string
 }
 
+export type MonitorItemResp = {
+  id: string
+  name: string
+  createTime: string
+  status: number
+}
+
 export type MonitorListResponseData = IApiResponseData<{
   total: number
   size: number
-  list: {
-    id: string
-    name: string
-    createTime: string
-  }[]
+  list: MonitorItemResp[]
 }>

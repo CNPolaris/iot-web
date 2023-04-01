@@ -139,7 +139,7 @@ export default {
       router.push("/dashboard")
     }
     const validProjectForm = () => {
-      if (createProjectForm.name && createProjectForm.describe) {
+      if (createProjectForm.name && createProjectForm.describes) {
         return true
       } else {
         return false
