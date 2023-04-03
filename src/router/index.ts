@@ -71,6 +71,14 @@ const routes = [
           title: "网关集中管理"
         },
         component: () => import("@/views/admin/gateway.vue")
+      },
+      {
+        path: "/admin/monitor",
+        name: "AdminMonitor",
+        meta: {
+          title: "监控集中管理"
+        },
+        component: () => import("@/views/admin/monitor.vue")
       }
     ]
   },

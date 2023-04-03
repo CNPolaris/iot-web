@@ -20,6 +20,7 @@ export type MonitorItemResp = {
   id: string
   name: string
   createTime: string
+  describes: string
   status: number
   onLine: number
 }
@@ -29,3 +30,12 @@ export type MonitorListResponseData = IApiResponseData<{
   size: number
   list: MonitorItemResp[]
 }>
+
+export type MonitorUpdateRequestData = {
+  id: string
+  name: string
+  createTime: string
+  describes: string
+  status: number
+  onLine: number
+}

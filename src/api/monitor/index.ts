@@ -30,3 +30,11 @@ export function getMonitorListApi(data: Monitor.getMonitorListRequestData) {
     data
   })
 }
+
+export function updateMonitorApi(monitorId: number, data: Monitor.MonitorUpdateRequestData) {
+  return request<IApiResponseData<{}>>({
+    url: "/iot/api/monitor/" + `${monitorId}`,
+    method: "post",
+    data
+  })
+}
