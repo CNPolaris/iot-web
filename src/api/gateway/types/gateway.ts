@@ -2,13 +2,15 @@ export interface createGatewayRequestData {
   name: string
   project_id: string
 }
-export type IGatewayDetailData = {
+export type IGatewayDatailData = {
   id: string
   name: string
   projectId: string
   gatewayKey: string
   createTime: string
   address: string
+  describes: string
+  status: number
 }
 
 export interface IUpdateGatewayData {
@@ -19,4 +21,15 @@ export interface IUpdateGatewayData {
   projectId: string
 }
 
-export type GetGatewayDetailResponseData = IApiResponseData<IGatewayDetailData>
+export type GetGatewayDetailResponseData = IApiResponseData<{
+  total: number
+  size: number
+  list: IGatewayDatailData[]
+}>
+
+export type GetGatewayListRequestData = {
+  page: number
+  limit: number
+  gatewayName: string
+  gatewayId: number
+}

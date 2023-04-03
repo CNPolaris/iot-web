@@ -63,6 +63,14 @@ const routes = [
           title: "项目管理"
         },
         component: () => import("@/views/project/edit.vue")
+      },
+      {
+        path: "/admin/gateway",
+        name: "AdminGateway",
+        meta: {
+          title: "网关集中管理"
+        },
+        component: () => import("@/views/admin/gateway.vue")
       }
     ]
   },

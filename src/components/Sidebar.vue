@@ -69,6 +69,19 @@ export default {
         title: "项目",
         icon: "el-icon-just-yingyongguanli",
         index: "/project/edit"
+      },
+      {
+        title: "管理",
+        subs: [
+          {
+            index: "/admin/gateway",
+            title: "网关"
+          },
+          {
+            index: "/admin/monitor",
+            title: "监控"
+          }
+        ]
       }
     ]
 

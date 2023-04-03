@@ -10,10 +10,11 @@ export function getGatewayCountApi(id: any) {
   })
 }
 
-export function getGatewayListApi(id: any) {
-  return request({
+export function getGatewayListApi(id: any, data: Gateway.GetGatewayListRequestData) {
+  return request<Gateway.GetGatewayDetailResponseData>({
     url: "/iot/api/gateway/list/" + id,
-    method: "GET"
+    method: "post",
+    data
   })
 }
 
@@ -77,3 +78,12 @@ export function pushTaskApi(gatewayId: string, taskId: string) {
     method: "get"
   })
 }
+
+export function IGetGatewayListApi(data: Gateway.GetGatewayListRequestData) {
+  return request({
+    url: "/iot/api/gateway/list",
+    method: "post",
+    data
+  })
+}
+

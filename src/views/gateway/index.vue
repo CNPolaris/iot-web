@@ -27,6 +27,18 @@
       </el-col>
       <el-col :span="2" />
     </el-row>
+    <div class="paper-wrapper">
+      <el-pagination
+        background
+        :layout="paginationData.layout"
+        :page-sizes="paginationData.pageSizes"
+        :total="paginationData.total"
+        :page-size="paginationData.pageSize"
+        :currentPage="paginationData.currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
   <el-dialog v-model="dialogVisible" title="添加网关">
     <el-form :model="createGatewayForm" :rules="rules">
@@ -45,26 +57,36 @@
 <script lang="ts">
 import { ref, reactive } from "vue"
 import { getGatewayListApi, createGatewayApi } from "@/api/gateway/index"
-import { type createGatewayRequestData } from "@/api/gateway/types/gateway"
+import { type createGatewayRequestData, GetGatewayListRequestData } from "@/api/gateway/types/gateway"
 import { getNowProject } from "@/utils/cache/localStorage"
 import { useRouter } from "vue-router"
 import { ElMessage } from "element-plus"
+import { usePagination } from "@/hooks/usePagination"
 export default {
   name: "Gateway",
   setup() {
     const tableData = ref<any[]>([])
     const router = useRouter()
     const dialogVisible = ref(false)
+    const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
     const createGatewayForm: createGatewayRequestData = reactive({
       name: "",
       project_id: getNowProject() as string
+    })
+    const pageForm: GetGatewayListRequestData = reactive({
+      page: 1,
+      limit: 10,
+      gatewayId: null,
+      gatewayName: null
     })
     const rules = {
       name: [{ required: true, message: "请输入网关名称", trigger: "blur" }]
     }
     const getAllGatewayList = () => {
-      getGatewayListApi(getNowProject()).then((res) => {
-        tableData.value = res.data
+      pageForm.page = paginationData.currentPage
+      getGatewayListApi(getNowProject(), pageForm).then((res) => {
+        tableData.value = res.data.list
+        paginationData.total = res.data.total
       })
     }
     const handleCreateGateway = () => {
@@ -88,9 +110,12 @@ export default {
       tableData,
       rules,
       createGatewayForm,
+      paginationData,
       getAllGatewayList,
       handleChoiceGateway,
-      handleCreateGateway
+      handleCreateGateway,
+      handleCurrentChange,
+      handleSizeChange
     }
   }
 }
