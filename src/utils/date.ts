@@ -1,4 +1,10 @@
-import moment from "moment"
-export function formatDate(data: any) {
-  return moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss")
+import dayjs from "dayjs"
+
+/** 格式化时间 */
+export const formatDateTime = (time: string | number | Date) => {
+  if (!time) {
+    return "N/A"
+  }
+  const date = new Date(time)
+  return dayjs(date).format("YYYY-MM-DD HH:mm:ss")
 }

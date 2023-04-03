@@ -11,7 +11,7 @@ export function getGatewayCountApi(id: any) {
 }
 
 export function getGatewayListApi(id: any, data: Gateway.GetGatewayListRequestData) {
-  return request<Gateway.GetGatewayDetailResponseData>({
+  return request<Gateway.GetGatewayListResponseData>({
     url: "/iot/api/gateway/list/" + id,
     method: "post",
     data

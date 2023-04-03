@@ -32,11 +32,11 @@
                     <div class="grid-cont-right">
                       <div>
                         监控名称：{{ item.name }}
-                        <el-tag :type="item.status == 0 ? 'success' : 'warning'" size="small" effect="light">{{
-                          item.status === 0 ? "有效" : "无效"
+                        <el-tag :type="item.status == 1 ? 'success' : 'warning'" size="small" effect="light">{{
+                          item.status === 1 ? "有效" : "无效"
                         }}</el-tag>
-                        <el-tag :type="item.onLine == 0 ? 'success' : 'warning'" size="small" effect="light">{{
-                          item.onLine === 0 ? "在线" : "离线"
+                        <el-tag :type="item.onLine == 1 ? 'success' : 'warning'" size="small" effect="light">{{
+                          item.onLine === 1 ? "在线" : "离线"
                         }}</el-tag>
                       </div>
                       <div>创建时间：{{ item.createTime }}</div>

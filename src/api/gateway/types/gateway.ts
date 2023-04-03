@@ -19,17 +19,20 @@ export interface IUpdateGatewayData {
   gatewayKey: string
   createTime: string
   projectId: string
+  status: number
 }
 
-export type GetGatewayDetailResponseData = IApiResponseData<{
-  total: number
-  size: number
-  list: IGatewayDatailData[]
-}>
+export type GetGatewayDetailResponseData = IApiResponseData<IGatewayDatailData>
 
 export type GetGatewayListRequestData = {
   page: number
   limit: number
   gatewayName: string
-  gatewayId: number
+  gatewayId: string
 }
+
+export type GetGatewayListResponseData = IApiResponseData<{
+  total: number
+  size: number
+  list: IGatewayDatailData[]
+}>
