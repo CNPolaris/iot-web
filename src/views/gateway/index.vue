@@ -66,13 +66,13 @@ export default {
       getGatewayListApi(getNowProject()).then((res) => {
         tableData.value = res.data
       })
-      console.log(tableData)
     }
     const handleCreateGateway = () => {
       createGatewayApi(createGatewayForm).then((res: any) => {
         if (res.code === 200) {
           ElMessage.success("添加网关成功")
           dialogVisible.value = false
+          getAllGatewayList()
         } else {
           ElMessage.error("添加网关失败")
         }

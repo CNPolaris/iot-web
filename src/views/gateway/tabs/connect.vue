@@ -14,7 +14,7 @@
     等有效负载，适合一些自定义协议的通信场景，也适用于 TCP 透传方式。
   </div>
   <div class="dendpoint">
-    <div class="code1">tcp://127.0.0.1:9960</div>
+    <div class="code1">tcp://{{ address }}:9960</div>
     <el-row style="margin-top: 10px">
       <el-table :data="tcpData" :show-header="false">
         <el-table-column prop="name" width="100" />
@@ -40,16 +40,17 @@ import { reactive, toRefs } from "vue"
 export default {
   name: "ConnectTab",
   props: {
-    gatewayKey: String
+    gatewayKey: String,
+    address: String
   },
   setup(props) {
     const { toClipboard } = useClipboard()
-    const { gatewayKey } = toRefs(props)
+    const { gatewayKey, address } = toRefs(props)
     const tcpData = reactive([
       {
         id: 0,
         name: "TCP地址",
-        value: "127.0.0.1"
+        value: address
       },
       {
         id: 1,

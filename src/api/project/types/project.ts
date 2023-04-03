@@ -1,6 +1,7 @@
 export interface ICreateProjectRequestData {
   name: string
   describes: string
+  serverId: number
 }
 
 export interface IProjectDetailData {

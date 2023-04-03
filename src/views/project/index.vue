@@ -43,7 +43,7 @@
         <div class="p-header" style="margin-top: 10px">
           <h3 class="p-title">我创建的项目</h3>
           <div class="p-actions">
-            <el-button type="primary" @click="dialogVisible = true">创建项目</el-button>
+            <el-button type="primary" @click="handleShowCreateDialog">创建项目</el-button>
           </div>
         </div>
         <el-row :gutter="20" style="margin-top: 20px">
@@ -84,6 +84,11 @@
       <el-form-item prop="describe" label="项目描述">
         <el-input v-model="createProjectForm.describes" />
       </el-form-item>
+      <el-form-item prop="server" label="选择服务器">
+        <el-select v-model="createProjectForm.serverId" placeholder="sercerId">
+          <el-option v-for="item in serverList" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -101,6 +106,8 @@ import { ElMessage } from "element-plus"
 import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/cookies"
 import { setNowProject, setNowProjectKey } from "@/utils/cache/localStorage"
 import { getMyProjectApi, createProjectApi } from "@/api/project/index"
+import { getServeAddressList } from "@/api/serve/index"
+import { ServeAddressItemResp } from "@/api/serve/types/serve"
 import { type IGetProjectDataApi } from "@/api/project/index"
 import { type ICreateProjectRequestData } from "@/api/project/types/project"
 export default {
@@ -110,17 +117,20 @@ export default {
     const router = useRouter()
     const tableData = ref<any[]>([])
     const dialogVisible = ref(false)
+    const serverList = ref<ServeAddressItemResp[]>([])
     const getProjectForm: IGetProjectDataApi = reactive({
       page: 1,
       limit: 10
     })
     const createProjectForm: ICreateProjectRequestData = reactive({
       name: "",
-      describes: ""
+      describes: "",
+      serverId: 0
     })
     const rules = {
       name: [{ required: true, message: "请输入项目名称", trigger: "blur" }],
-      describes: [{ required: true, message: "请输入项目描述", trigger: "blur" }]
+      describes: [{ required: true, message: "请输入项目描述", trigger: "blur" }],
+      server: [{ required: true, message: "请选择一个区域", trigger: "blur" }]
     }
     const handleCommand = (command: string) => {
       if (command === "loginOut") {
@@ -132,7 +142,16 @@ export default {
         router.push("/user")
       }
     }
-
+    const handleGetServeList = () => {
+      getServeAddressList().then((res) => {
+        if (res.code === 200) {
+          serverList.value = res.data.list
+          createProjectForm.serverId = serverList.value[0].id
+        } else {
+          ElMessage.error("服务器暂时不支持创建项目")
+        }
+      })
+    }
     const handleChoiceProject = (id: string, projectKey: string) => {
       setNowProject(id)
       setNowProjectKey(projectKey)
@@ -160,6 +179,10 @@ export default {
         ElMessage.warning("项目名和描述不能为空")
       }
     }
+    const handleShowCreateDialog = () => {
+      handleGetServeList()
+      dialogVisible.value = true
+    }
     const getMyProjects = () => {
       getMyProjectApi(getProjectForm).then((re) => {
         tableData.value = re.data
@@ -175,7 +198,10 @@ export default {
       dialogVisible,
       createProjectForm,
       rules,
+      serverList,
       handleCreateProject,
+      handleShowCreateDialog,
+      handleGetServeList,
       handleCommand,
       handleChoiceProject
     }

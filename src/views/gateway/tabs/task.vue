@@ -71,7 +71,7 @@ export default {
         tableData.value = res.data.list
       })
     }
-    getAllTask()
+    // getAllTask()
     return {
       handleCreateTask,
       getAllTask,

@@ -18,7 +18,7 @@ export function getGatewayListApi(id: any) {
 }
 
 export function getGatewayDetailApi(id: any) {
-  return request({
+  return request<Gateway.GetGatewayDetailResponseData>({
     url: "/iot/api/gateway/" + id,
     method: "GET"
   })

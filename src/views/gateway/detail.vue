@@ -19,7 +19,7 @@
           <OverviewTab />
         </el-tab-pane>
         <el-tab-pane label="连接" name="connect">
-          <ConnectTab :gatewayKey="gatewayData.gatewayKey" />
+          <ConnectTab :gatewayKey="gatewayData.gatewayKey" :address="gatewayData.address" />
         </el-tab-pane>
         <el-tab-pane label="命令" name="command">
           <CommandTab />
@@ -70,7 +70,8 @@ export default {
       name: "",
       gatewayKey: "",
       createTime: "",
-      projectId: ""
+      projectId: "",
+      address: ""
     })
     const tcpData = reactive([
       {
@@ -95,13 +96,14 @@ export default {
      * 获取网关详情
      */
     const getGatewayDetail = () => {
-      getGatewayDetailApi(gatewayId.value).then((res: any) => {
+      getGatewayDetailApi(gatewayId.value).then((res) => {
         console.log(res.data)
         gatewayData.id = res.data.id
         gatewayData.projectId = res.data.projectId
         gatewayData.name = res.data.name
         gatewayData.gatewayKey = res.data.gatewayKey
         gatewayData.createTime = res.data.createTime
+        gatewayData.address = res.data.address
       })
     }
     const copyProjectKey = async () => {

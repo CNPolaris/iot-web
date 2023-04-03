@@ -35,7 +35,7 @@ export default {
       // this.url = this.router.query.id
       getMonitorDetailApi(this.route.query.monitorId).then((res) => {
         if (res.code === 200) {
-          this.url = "http://106.55.191.65:8888/live/" + res.data.monitorKey + ".flv" // 后期要改的
+          this.url = "http://127.0.0.1:8081/live/" + res.data.monitorKey + ".flv" // 后期要改的
           this.videoFlvPlay()
         } else {
           ElMessage.error("监控预览失败")
