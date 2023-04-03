@@ -22,7 +22,11 @@
                 :key="item.id"
                 style="padding-top: 10px"
               >
-                <el-card shadow="hover" :body-style="{ padding: '0px' }" @click="previewMonitor(item.id, item.status)">
+                <el-card
+                  shadow="hover"
+                  :body-style="{ padding: '0px' }"
+                  @click="previewMonitor(item.id, item.status, item.onLine)"
+                >
                   <div class="grid-content grid-con-2">
                     <!-- <i class="grid-con-icon"></i> -->
                     <div class="grid-cont-right">
@@ -30,6 +34,9 @@
                         监控名称：{{ item.name }}
                         <el-tag :type="item.status == 0 ? 'success' : 'warning'" size="small" effect="light">{{
                           item.status === 0 ? "有效" : "无效"
+                        }}</el-tag>
+                        <el-tag :type="item.onLine == 0 ? 'success' : 'warning'" size="small" effect="light">{{
+                          item.onLine === 0 ? "在线" : "离线"
                         }}</el-tag>
                       </div>
                       <div>创建时间：{{ item.createTime }}</div>
@@ -100,9 +107,11 @@ export default {
     const rules = {
       name: [{ required: true, message: "请输入监控名称", trigger: "blur" }]
     }
-    const previewMonitor = (id: string, status: number) => {
-      if (status === 0) {
+    const previewMonitor = (id: string, status: number, onLine: number) => {
+      if (status === 0 && onLine === 0) {
         router.push({ path: "/monitor/preview", query: { monitorId: id } })
+      } else if (status === 0 && onLine === 1) {
+        ElMessage.warning("监控设备离线")
       } else {
         ElMessage.warning("该监控已被禁用!")
       }

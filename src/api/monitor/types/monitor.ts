@@ -21,6 +21,7 @@ export type MonitorItemResp = {
   name: string
   createTime: string
   status: number
+  onLine: number
 }
 
 export type MonitorListResponseData = IApiResponseData<{
