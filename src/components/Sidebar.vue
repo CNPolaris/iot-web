@@ -72,6 +72,7 @@ export default {
       },
       {
         title: "管理",
+        icon: "el-icon-just-guanli",
         subs: [
           {
             index: "/admin/gateway",

@@ -22,7 +22,7 @@ export function createProjectApi(data: Project.ICreateProjectRequestData) {
 }
 
 export function getProjectDetailApi(projectId: String) {
-  return request({
+  return request<IApiResponseData<Project.IProjectDetailData>>({
     url: "/iot/api/project/" + projectId,
     method: "get"
   })

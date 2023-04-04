@@ -2,7 +2,7 @@
   <el-row>
     <el-col>
       <el-table :data="tableData" border style="widows: 100%">
-        <el-table-column fixed prop="id" label="ID" align="center" />
+        <el-table-column fixed="left" prop="id" label="ID" align="center" />
         <el-table-column fixed prop="name" label="监控名称" align="center" />
         <el-table-column prop="describes" label="描述" align="center" />
         <el-table-column prop="createTime" label="创建时间" align="center">
@@ -34,11 +34,24 @@
         <el-table-column fixed="right" label="操作" align="center">
           <template #default="scope">
             <el-button type="text" size="samll">edit</el-button>
+            <el-button type="text" size="samll" @click="handlePreview(scope.row)">preview</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
   </el-row>
+  <div class="pager-wrapper">
+    <el-pagination
+      background
+      :layout="paginationData.layout"
+      :page-sizes="paginationData.pageSizes"
+      :total="paginationData.total"
+      :page-size="paginationData.pageSize"
+      :currentPage="paginationData.currentPage"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 <script lang="ts">
 import { getMonitorListRequestData, MonitorItemResp } from "@/api/monitor/types/monitor"
@@ -48,8 +61,10 @@ import { reactive, ref } from "vue"
 import { usePagination } from "@/hooks/usePagination"
 import { formatDateTime } from "@/utils/date"
 import { ElMessage } from "element-plus"
+import { useRouter } from "vue-router"
 export default {
   setup() {
+    const router = useRouter()
     const pageForm: getMonitorListRequestData = reactive({
       page: 1,
       limit: 20,
@@ -76,12 +91,20 @@ export default {
       }
     }
     const handleChangeSwitch = (row: any) => {
-      console.log(row)
       updateMonitorApi(row.id, row).then((res) => {
         if (res.code !== 200) {
           ElMessage.error("切换状态失败")
         }
       })
+    }
+    const handlePreview = (row: any) => {
+      if (row.status === 1 && row.onLine === 1) {
+        router.push({ path: "/monitor/preview", query: { monitorId: row.id } })
+      } else if (row.status === 1 && row.onLine === 0) {
+        ElMessage.warning("监控设备离线")
+      } else {
+        ElMessage.error("该监控已被禁用!")
+      }
     }
     const handleGetTable = () => {
       getMonitorListApi(pageForm).then((res) => {
@@ -94,6 +117,7 @@ export default {
       pageForm,
       paginationData,
       tableData,
+      handlePreview,
       handleChangeSwitch,
       formatter,
       handleCurrentChange,

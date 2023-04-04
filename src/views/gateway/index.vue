@@ -27,7 +27,7 @@
       </el-col>
       <el-col :span="2" />
     </el-row>
-    <div class="paper-wrapper">
+    <div class="pager-wrapper">
       <el-pagination
         background
         :layout="paginationData.layout"

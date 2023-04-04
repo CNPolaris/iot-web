@@ -39,7 +39,7 @@
                           item.onLine === 1 ? "在线" : "离线"
                         }}</el-tag>
                       </div>
-                      <div>创建时间：{{ item.createTime }}</div>
+                      <div>创建时间：{{ formatDateTime(item.createTime) }}</div>
                     </div>
                   </div>
                 </el-card>
@@ -47,7 +47,7 @@
             </el-row>
           </el-col>
         </el-row>
-        <div class="paper-wrapper">
+        <div class="pager-wrapper">
           <el-pagination
             background
             :layout="paginationData.layout"
@@ -88,6 +88,7 @@ import { CreateMonitorRequestData, getMonitorListRequestData, MonitorItemResp } 
 import { createMonitorApi, getMonitorListApi } from "@/api/monitor"
 import { ElMessage } from "element-plus"
 import { usePagination } from "@/hooks/usePagination"
+import { formatDateTime } from "@/utils/date"
 export default {
   setup() {
     const monitorList = ref<MonitorItemResp[]>([])
@@ -108,12 +109,12 @@ export default {
       name: [{ required: true, message: "请输入监控名称", trigger: "blur" }]
     }
     const previewMonitor = (id: string, status: number, onLine: number) => {
-      if (status === 0 && onLine === 0) {
+      if (status === 1 && onLine === 1) {
         router.push({ path: "/monitor/preview", query: { monitorId: id } })
-      } else if (status === 0 && onLine === 1) {
+      } else if (status === 1 && onLine === 0) {
         ElMessage.warning("监控设备离线")
       } else {
-        ElMessage.warning("该监控已被禁用!")
+        ElMessage.error("该监控已被禁用!")
       }
     }
     const handleCreateMonitor = () => {
@@ -130,7 +131,7 @@ export default {
           }
         })
       } else {
-        ElMessage.warning("监控名称不能为空")
+        ElMessage.error("监控名称不能为空")
       }
     }
     const handleGetMonitorList = () => {
@@ -149,6 +150,7 @@ export default {
       rules,
       pageForm,
       paginationData,
+      formatDateTime,
       handleGetMonitorList,
       previewMonitor,
       handleCreateMonitor,

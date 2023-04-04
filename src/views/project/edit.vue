@@ -20,7 +20,7 @@
                       <el-row style="margin-left: -5px; margin-right: -5px">
                         <el-col>
                           <div class="bitem">
-                            <span class="btitile"> 项目 ID </span>
+                            <span class="btitle"> 项目 ID </span>
                             <span class="btips" />
                             <div class="baction">
                               <span>{{ projectDetail.id }}</span>
@@ -29,28 +29,39 @@
                         </el-col>
                         <el-col>
                           <div class="bitem">
-                            <span class="btitile"> 项目名称 </span>
+                            <span class="btitle"> 项目名称 </span>
                             <span class="btips" />
                             <div class="baction">
                               <span>{{ projectDetail.name }}</span>
+                              <el-button type="text" size="small" style="margin-left: 10px">编辑</el-button>
                             </div>
                           </div>
                         </el-col>
                         <el-col>
                           <div class="bitem">
-                            <span class="btitile"> 项目描述 </span>
+                            <span class="btitle"> 项目描述 </span>
                             <span class="btips" />
                             <div class="baction">
                               <span>{{ projectDetail.describes }}</span>
+                              <el-button type="text" size="small" style="margin-left: 10px">编辑</el-button>
                             </div>
                           </div>
                         </el-col>
                         <el-col>
                           <div class="bitem">
-                            <span class="btitile"> 创建时间 </span>
+                            <span class="btitle"> 创建时间 </span>
                             <span class="btips" />
                             <div class="baction">
                               <span>{{ projectDetail.createTime }}</span>
+                            </div>
+                          </div>
+                        </el-col>
+                        <el-col>
+                          <div class="bitem">
+                            <span class="btitle"> 所在服务器 </span>
+                            <span class="btips" />
+                            <div class="baction">
+                              <span>{{ projectDetail.serverName }}</span>
                             </div>
                           </div>
                         </el-col>
@@ -112,7 +123,7 @@ export default {
     const code = ref(createCode() as string)
     const codeForm = ref("")
     const handleGetProjectDetail = () => {
-      getProjectDetailApi(projectId).then((res: any) => {
+      getProjectDetailApi(projectId).then((res) => {
         if (res.code === 200) {
           projectDetail.value = res.data
         }
@@ -211,6 +222,13 @@ export default {
   font-size: 15px;
   line-height: 20px;
   color: #002822;
+}
+.bitem .btitle {
+  display: block;
+  font-size: 14px;
+  line-height: 18px;
+  color: #606266;
+  font-weight: 600;
 }
 .dialog-footer button:first-child {
   margin-right: 10px;

@@ -34,6 +34,18 @@
       </el-table>
     </el-col>
   </el-row>
+  <div class="pager-wrapper">
+    <el-pagination
+      background
+      :layout="paginationData.layout"
+      :page-sizes="paginationData.pageSizes"
+      :total="paginationData.total"
+      :page-size="paginationData.pageSize"
+      :currentPage="paginationData.currentPage"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 <script lang="ts">
 import { GetGatewayListRequestData, IGatewayDatailData } from "@/api/gateway/types/gateway"

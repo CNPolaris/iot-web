@@ -4,11 +4,14 @@ export interface ICreateProjectRequestData {
   serverId: number
 }
 
-export interface IProjectDetailData {
+export type IProjectDetailData = {
   id: string
   name: string
   describes: string
   createTime: string
+  createUser: string
+  status: number
+  serverName: string
 }
 
 type IProjectDetailResponseData = {
