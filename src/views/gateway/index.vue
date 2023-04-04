@@ -94,6 +94,7 @@ export default {
         if (res.code === 200) {
           ElMessage.success("添加网关成功")
           dialogVisible.value = false
+          createGatewayForm.name = ""
           getAllGatewayList()
         } else {
           ElMessage.error("添加网关失败")
