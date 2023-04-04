@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="18">
+      <el-col :span="24">
         <el-row :gutter="20" class="mgb20">
-          <el-col :span="6">
+          <el-col :span="6" :xs="12">
             <el-card shadow="hover" :body-style="{ padding: '0px' }" @click="handleToAllGateway()">
               <div class="grid-content grid-con-2">
                 <!-- <i class="grid-con-icon"></i> -->
@@ -14,7 +14,7 @@
               </div>
             </el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" :xs="12">
             <el-card shadow="hover" :body-style="{ padding: '0px' }">
               <div class="grid-content grid-con-2">
                 <!-- <i class="grid-con-icon"></i> -->
@@ -25,7 +25,7 @@
               </div>
             </el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" :xs="12">
             <el-card shadow="hover" :body-style="{ padding: '0px' }">
               <div class="grid-content grid-con-2">
                 <!-- <i class="grid-con-icon"></i> -->
@@ -36,7 +36,7 @@
               </div>
             </el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" :xs="12">
             <el-card shadow="hover" :body-style="{ padding: '0px' }">
               <div class="grid-content grid-con-2">
                 <!-- <i class="grid-con-icon"></i> -->
@@ -51,6 +51,7 @@
       </el-col>
       <el-col :span="6" />
     </el-row>
+    <Srs />
   </div>
 </template>
 
@@ -59,8 +60,10 @@ import { getGatewayCountApi } from "@/api/gateway"
 import { getNowProject } from "@/utils/cache/localStorage"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { Srs } from "./components"
 export default {
   name: "DashBoard",
+  components: { Srs },
   setup() {
     const nowProjectId = getNowProject()
     const gatewayCountData = ref(0)
