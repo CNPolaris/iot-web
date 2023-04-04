@@ -20,7 +20,7 @@
                 <!-- <i class="grid-con-icon"></i> -->
                 <div class="grid-cont-right">
                   <div class="grid-num">0</div>
-                  <div>在线设备</div>
+                  <div>在线监控</div>
                 </div>
               </div>
             </el-card>
@@ -49,7 +49,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="6"> </el-col>
+      <el-col :span="6" />
     </el-row>
   </div>
 </template>

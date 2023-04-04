@@ -4,6 +4,11 @@
       <el-table :data="tableData" border style="widows: 100%">
         <el-table-column fixed="left" prop="id" label="ID" align="center" />
         <el-table-column fixed prop="name" label="监控名称" align="center" />
+        <el-table-column label="推流地址">
+          <template #default="scope">
+            <span>{{ scope.row.monitorKey }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="describes" label="描述" align="center" />
         <el-table-column prop="createTime" label="创建时间" align="center">
           <template #default="scope">
@@ -33,8 +38,8 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" align="center">
           <template #default="scope">
-            <el-button type="text" size="samll">edit</el-button>
-            <el-button type="text" size="samll" @click="handlePreview(scope.row)">preview</el-button>
+            <el-button type="text">edit</el-button>
+            <el-button type="text" @click="handlePreview(scope.row)">preview</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,17 +62,26 @@
 import { getMonitorListRequestData, MonitorItemResp } from "@/api/monitor/types/monitor"
 import { getNowProject } from "@/utils/cache/localStorage"
 import { getMonitorListApi, updateMonitorApi } from "@/api/monitor"
-import { reactive, ref } from "vue"
+import { onDeactivated, onMounted, reactive, ref } from "vue"
 import { usePagination } from "@/hooks/usePagination"
 import { formatDateTime } from "@/utils/date"
 import { ElMessage } from "element-plus"
 import { useRouter } from "vue-router"
 export default {
   setup() {
+    const timer = ref(0)
+    onMounted(() => {
+      timer.value = window.setInterval(() => {
+        handleGetTable()
+      }, 1000 * 60 * 5)
+    })
+    onDeactivated(() => {
+      window.clearInterval(timer.value)
+    })
     const router = useRouter()
     const pageForm: getMonitorListRequestData = reactive({
       page: 1,
-      limit: 20,
+      limit: 10,
       projectId: getNowProject() as string
     })
     const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()

@@ -48,9 +48,9 @@
   </div>
 </template>
 <script lang="ts">
-import { GetGatewayListRequestData, IGatewayDatailData } from "@/api/gateway/types/gateway"
+import { GetGatewayListRequestData, IGatewayDetailData } from "@/api/gateway/types/gateway"
 import { getGatewayListApi, updateGatewayDataApi } from "@/api/gateway"
-import { reactive, ref } from "vue"
+import { onDeactivated, onMounted, reactive, ref } from "vue"
 import { usePagination } from "@/hooks/usePagination"
 const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
 import { getNowProject } from "@/utils/cache/localStorage"
@@ -63,7 +63,16 @@ export default {
       gatewayId: "",
       gatewayName: ""
     })
-    const tableData = ref<IGatewayDatailData[]>([])
+    const tableData = ref<IGatewayDetailData[]>([])
+    const timer = ref(0)
+    onMounted(() => {
+      timer.value = window.setInterval(() => {
+        handleGetList()
+      }, 1000 * 60 * 5)
+    })
+    onDeactivated(() => {
+      window.clearInterval(timer.value)
+    })
     const formatter = (value: string) => {
       return formatDateTime(value)
     }
