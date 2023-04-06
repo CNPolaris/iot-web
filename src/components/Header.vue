@@ -7,6 +7,9 @@
     </div>
     <div class="logo">元理云IOT</div>
     <div class="project">
+      <el-select v-model="curRegion" @change="handleSelectChange">
+        <el-option v-for="item in serveList" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
       <div class="text">
         <a href="/#/project">我的项目</a>
       </div>
@@ -47,12 +50,14 @@
   </div>
 </template>
 <script lang="ts">
-import { onMounted } from "vue"
+import { onMounted, ref } from "vue"
 import { useSidebarStore } from "@/stores/sidebar"
 import { useRouter } from "vue-router"
 import avatar from "../assets/img/img.png"
-import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/cookies"
-
+import { getEmail, removeEmail, removeToKen, removeRole, setCurRegion } from "@/utils/cache/cookies"
+import { getServeAddressList } from "@/api/serve"
+import { ServeAddressItemResp } from "@/api/serve/types/serve"
+import { ElMessage } from "element-plus"
 export default {
   setup() {
     const username = getEmail()
@@ -60,11 +65,30 @@ export default {
     const message = 2
 
     const sidebar = useSidebarStore()
+    // 服务器列表
+    const serveList = ref<ServeAddressItemResp[]>([])
+    const curRegion = ref("")
+    const handleGetServe = () => {
+      getServeAddressList().then((res) => {
+        if (res.code === 200) {
+          serveList.value = res.data.list
+          curRegion.value = res.data.list[0].id as unknown as string
+          setCurRegion(curRegion.value)
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+    handleGetServe()
+    // 选择事件
+    const handleSelectChange = () => {
+      setCurRegion(curRegion.value)
+      router.push("/project")
+    }
     // 侧边栏折叠
     const collapseChage = () => {
       sidebar.handleCollapse()
     }
-
     onMounted(() => {
       if (document.body.clientWidth < 1500) {
         collapseChage()
@@ -93,6 +117,9 @@ export default {
       username,
       avatar,
       message,
+      curRegion,
+      serveList,
+      handleSelectChange,
       collapseChage,
       handleCommand,
       hanlderMyProjects

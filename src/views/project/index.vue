@@ -1,6 +1,14 @@
 <template>
   <div class="header">
     <div class="logo">元理云IOT</div>
+    <div class="project">
+      <el-select v-model="curRegion" @change="handleSelectChange" style="width: 210px">
+        <el-option v-for="item in serverList" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
+      <div class="text">
+        <a href="/#/project">我的项目</a>
+      </div>
+    </div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 消息中心 -->
@@ -103,7 +111,7 @@ import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import avatar from "@/assets/img/img.png"
 import { ElMessage } from "element-plus"
-import { getEmail, removeEmail, removeToKen, removeRole } from "@/utils/cache/cookies"
+import { getEmail, removeEmail, removeToKen, removeRole, setCurRegion } from "@/utils/cache/cookies"
 import { setNowProject, setNowProjectKey } from "@/utils/cache/localStorage"
 import { getMyProjectApi, createProjectApi } from "@/api/project/index"
 import { getServeAddressList } from "@/api/serve/index"
@@ -118,6 +126,7 @@ export default {
     const tableData = ref<any[]>([])
     const dialogVisible = ref(false)
     const serverList = ref<ServeAddressItemResp[]>([])
+    const curRegion = ref("")
     const getProjectForm: IGetProjectDataApi = reactive({
       page: 1,
       limit: 10
@@ -142,16 +151,24 @@ export default {
         router.push("/user")
       }
     }
+    // 选择事件
+    const handleSelectChange = () => {
+      setCurRegion(curRegion.value)
+      router.push("/project")
+    }
     const handleGetServeList = () => {
       getServeAddressList().then((res) => {
         if (res.code === 200) {
           serverList.value = res.data.list
           createProjectForm.serverId = serverList.value[0].id
+          curRegion.value = res.data.list[0].id as unknown as string
+          setCurRegion(curRegion.value)
         } else {
           ElMessage.error("服务器暂时不支持创建项目")
         }
       })
     }
+    handleGetServeList()
     const handleChoiceProject = (id: string, projectKey: string) => {
       setNowProject(id)
       setNowProjectKey(projectKey)
@@ -199,6 +216,8 @@ export default {
       createProjectForm,
       rules,
       serverList,
+      curRegion,
+      handleSelectChange,
       handleCreateProject,
       handleShowCreateDialog,
       handleGetServeList,
@@ -219,9 +238,19 @@ export default {
 }
 .header .logo {
   float: left;
-  width: 250px;
+  width: 120px;
   line-height: 70px;
   padding-left: 25px;
+}
+.header .project {
+  float: left;
+  margin: 0 10px 0 20px;
+  font-size: 14px;
+  line-height: 70px;
+}
+.header .text {
+  display: inline-block;
+  margin: 0 0 0 20px;
 }
 .header-right {
   float: right;
@@ -373,5 +402,17 @@ export default {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.header a {
+  color: rgb(243, 240, 240);
+  text-decoration: none;
+}
+.header a:hover {
+  color: #6690cf;
+  text-decoration: none;
+}
+.header a:active {
+  color: #6690cf;
+  text-decoration: none;
 }
 </style>

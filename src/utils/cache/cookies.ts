@@ -37,3 +37,15 @@ export const getRole = () => {
 export const removeRole = () => {
   Cookies.remove(CacheKey.ROLE)
 }
+
+export const setCurRegion = (region: string) => {
+  Cookies.set(CacheKey.CUR_REGION, region)
+}
+
+export const getCurRegion = () => {
+  return Cookies.get(CacheKey.CUR_REGION)
+}
+
+export const removeCurRegion = () => {
+  Cookies.remove(CacheKey.CUR_REGION)
+}
