@@ -45,6 +45,12 @@
       <el-form-item prop="name" label="网关名称">
         <el-input v-model="createGatewayForm.name" />
       </el-form-item>
+      <el-form-item prop="imei" label="设备编号">
+        <el-input v-model="createGatewayForm.imei" />
+      </el-form-item>
+      <el-form-item prop="describes" label="网关描述">
+        <el-input v-model="createGatewayForm.describes" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -71,7 +77,9 @@ export default {
     const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
     const createGatewayForm: createGatewayRequestData = reactive({
       name: "",
-      project_id: getNowProject() as string
+      project_id: getNowProject() as string,
+      imei: "",
+      describes: "网关"
     })
     const pageForm: GetGatewayListRequestData = reactive({
       page: 1,

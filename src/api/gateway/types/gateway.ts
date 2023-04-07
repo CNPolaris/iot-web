@@ -1,6 +1,8 @@
 export interface createGatewayRequestData {
   name: string
   project_id: string
+  imei: string
+  describes: string
 }
 export type IGatewayDetailData = {
   id: string
